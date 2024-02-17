@@ -11,6 +11,10 @@ import { UserMapper } from '../mapper';
 export class UserRepository implements IUserRepository {
   constructor(private txHost: TransactionHost<TransactionalAdapterPrisma>) {}
 
+  async findById(id: number): Promise<UserEntity> {
+    return this.txHost.tx.user.findFirst({ where: { id } });
+  }
+
   async create(user: UserEntity): Promise<UserEntity> {
     const newUser = await this.txHost.tx.user.create({ data: user });
     return UserMapper.toEntity(newUser);

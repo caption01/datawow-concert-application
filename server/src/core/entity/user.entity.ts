@@ -1,11 +1,11 @@
-import { Role } from '../enum';
+import { Role as RolePrisma } from '@prisma/client';
 
 export class UserEntity {
   id: number;
   username: string;
   firstname: string;
   lastname: string;
-  role: Role;
+  role: RolePrisma;
 
   createdAt: Date;
   updatedAt?: Date;
