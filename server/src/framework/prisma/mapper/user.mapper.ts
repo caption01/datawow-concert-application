@@ -7,7 +7,7 @@ import { User } from '@prisma/client';
 export class UserMapper {
   private constructor() {
     throw new Error(
-      'PrismaNotificationMapper is a static class and should not be instantiated',
+      'PrismaMapper is a static class and should not be instantiated',
     );
   }
 

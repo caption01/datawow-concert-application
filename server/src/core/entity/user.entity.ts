@@ -7,7 +7,7 @@ export class UserEntity {
   lastname: string;
   role: Role;
 
-  createdAt: string;
-  updatedAt?: string;
-  deletedAt?: string;
+  createdAt: Date;
+  updatedAt?: Date;
+  deletedAt?: Date;
 }
