@@ -15,6 +15,7 @@ import { PrismaModule, PrismaService } from './framework';
     ClsModule.forRoot({
       plugins: [
         new ClsPluginTransactional({
+          connectionName: 'prisma-connection',
           imports: [PrismaModule],
           adapter: new TransactionalAdapterPrisma({
             prismaInjectionToken: PrismaService,

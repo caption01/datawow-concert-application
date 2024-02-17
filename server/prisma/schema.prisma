@@ -17,9 +17,9 @@ model User {
   lastname  String
   role      Role
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  deletedAt DateTime
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+  deletedAt DateTime?
 
   Reservation      Reservation[]
   ReservationAudit ReservationAudit[]
@@ -34,9 +34,9 @@ model Concert {
   createdBy   User   @relation(fields: [createdById], references: [id])
   createdById Int
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  deletedAt DateTime
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+  deletedAt DateTime?
 
   Reservation      Reservation[]
   ReservationAudit ReservationAudit[]
@@ -49,9 +49,9 @@ model Reservation {
   concert   Concert @relation(fields: [concertId], references: [id])
   concertId Int
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  deletedAt DateTime
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+  deletedAt DateTime?
 }
 
 model ReservationAudit {
@@ -62,9 +62,9 @@ model ReservationAudit {
   concertId Int
   action    Action
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  deletedAt DateTime
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+  deletedAt DateTime?
 }
 
 enum Role {
