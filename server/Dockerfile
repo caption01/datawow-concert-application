@@ -21,3 +21,6 @@ COPY prisma prisma
 COPY src src
 
 RUN chmod +x ./entrypoint.sh
+
+RUN npx prisma generate --schema ./prisma/schema.prisma
+

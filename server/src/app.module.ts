@@ -1,10 +1,32 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { ConfigModule } from '@nestjs/config';
+import { ClsModule } from 'nestjs-cls';
+import { ClsPluginTransactional } from '@nestjs-cls/transactional';
+import { TransactionalAdapterPrisma } from '@nestjs-cls/transactional-adapter-prisma';
+
+import { AppController } from '@src/app.controller';
+import { AppConfigModule, AppConfigService } from './common/config';
+
+import { PrismaModule, PrismaService } from './framework';
 
 @Module({
-  imports: [],
+  imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
+    ClsModule.forRoot({
+      plugins: [
+        new ClsPluginTransactional({
+          imports: [PrismaModule],
+          adapter: new TransactionalAdapterPrisma({
+            prismaInjectionToken: PrismaService,
+          }),
+        }),
+      ],
+      global: true,
+      middleware: { mount: true },
+    }),
+    AppConfigModule,
+  ],
+  providers: [AppConfigService],
   controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}

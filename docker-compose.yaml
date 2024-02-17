@@ -6,7 +6,7 @@ services:
       context: ./server
       args:
         NODE_ENV: development
-    command: yarn start:dev
+    command: "./entrypoint.sh"
     ports:
       - "${PORT:-3010}:${PORT:-3010}"
     env_file:
