@@ -1,12 +1,21 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, Get } from '@nestjs/common';
 import { Transactional } from '@nestjs-cls/transactional';
 
-import { CreateConcertUseCase } from '@src/use-case';
+import { CreateConcertUseCase, ShowConcertsUseCase } from '@src/use-case';
 import { CreateConcertDto } from '@src/core/dto';
 
 @Controller({ path: '/api/concerts' })
 export class ConcertController {
-  constructor(private createConcertUseCase: CreateConcertUseCase) {}
+  constructor(
+    private showConcertsUseCase: ShowConcertsUseCase,
+    private createConcertUseCase: CreateConcertUseCase,
+  ) {}
+
+  @Transactional()
+  @Get()
+  async showConcerts(): Promise<any> {
+    return this.showConcertsUseCase.getAllConcerts();
+  }
 
   @Transactional()
   @Post()
