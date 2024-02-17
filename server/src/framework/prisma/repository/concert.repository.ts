@@ -18,6 +18,11 @@ export class ConcertRepository implements IConcertRepository {
     return map(allConcerts, ConcertMapper.toEntity);
   }
 
+  async findById(id: number): Promise<ConcertEntity> {
+    const concert = await this.txHost.tx.concert.findFirst({ where: { id } });
+    return ConcertMapper.toEntity(concert);
+  }
+
   async create(concert: CreateConcertDto): Promise<ConcertEntity> {
     const newConcert = await this.txHost.tx.concert.create({
       data: {
@@ -28,5 +33,12 @@ export class ConcertRepository implements IConcertRepository {
       },
     });
     return ConcertMapper.toEntity(newConcert);
+  }
+
+  async deleteById(id: number): Promise<ConcertEntity> {
+    const deletedConcert = await this.txHost.tx.concert.delete({
+      where: { id },
+    });
+    return ConcertMapper.toEntity(deletedConcert);
   }
 }

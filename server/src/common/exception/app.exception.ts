@@ -13,4 +13,11 @@ export class AppException extends BaseException {
   static userNotFound(): AppException {
     return new AppException({ error: 'user not found' }, HttpStatus.NOT_FOUND);
   }
+
+  static concertNotFound(): AppException {
+    return new AppException(
+      { error: 'concert not found' },
+      HttpStatus.NOT_FOUND,
+    );
+  }
 }
