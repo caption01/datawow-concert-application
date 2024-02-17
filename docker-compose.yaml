@@ -8,12 +8,16 @@ services:
         NODE_ENV: development
     command: yarn start:dev
     ports:
-      - 3010:3010
+      - "${PORT:-3010}:${PORT:-3010}"
+    env_file:
+      - ./server/.env
     environment:
-      - NODE_ENV=development
-      - PORT=3010
+      - NODE_ENV=${NODE_ENV:-development}
+      - PORT=${PORT:-3010}
+      - DATABASE_URL=${DATABASE_URL:-postgresql://root:password@db:5432/concerts-app?schema=public}
     volumes:
       - ./server/src:/app/src
+      - ./server/prisma:/app/prisma
   db:
     container_name: db
     image: postgres

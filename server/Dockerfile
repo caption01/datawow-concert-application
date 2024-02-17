@@ -17,6 +17,7 @@ COPY nest-cli.json .
 COPY tsconfig.json .
 COPY tsconfig.build.json .
 COPY entrypoint.sh .
+COPY prisma prisma 
 COPY src src
 
 RUN chmod +x ./entrypoint.sh
