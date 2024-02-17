@@ -7,7 +7,7 @@ export class AppController {
   @Get()
   async getHello(): Promise<any> {
     return {
-      message: 'app runnning',
+      message: 'app running',
     };
   }
 }
