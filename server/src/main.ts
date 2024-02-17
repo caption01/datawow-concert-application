@@ -2,8 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { ValidationPipe, HttpException, HttpStatus } from '@nestjs/common';
 import * as dotenv from 'dotenv';
 
-import { AppConfigService } from '@common/config/config.service';
-import { CatchExceptions } from '@common/exception';
+import { CatchExceptions, AppConfigService } from '@common/index';
 
 import { AppModule } from './app.module';
 
