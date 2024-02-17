@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 services:
   server:
     container_name: server
@@ -14,3 +14,17 @@ services:
       - PORT=3010
     volumes:
       - ./server/src:/app/src
+  db:
+    container_name: db
+    image: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=root
+      - POSTGRES_DB=concerts-app
+
+volumes:
+  db_data:
