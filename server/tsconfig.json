@@ -15,7 +15,8 @@
       "@core/*": ["./src/core/*"],
       "@common/*": ["./src/common/*"],
       "@application/*": ["./src/application/*"],
-      "@framework/*": ["./src/framework/*"]
+      "@framework/*": ["./src/framework/*"],
+      "@use-case/*": ["./src/use-case/*"]
     },
     "incremental": true,
     "skipLibCheck": true,

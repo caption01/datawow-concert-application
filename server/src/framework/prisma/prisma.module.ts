@@ -1,9 +1,9 @@
 import { Module, Global } from '@nestjs/common';
 
-import { IUserRepository } from '@core/repository';
+import { IUserRepository, IConcertRepository } from '@core/repository';
 
 import { PrismaService } from './prisma.service';
-import { UserRepository } from './repository';
+import { UserRepository, ConcertRepository } from './repository';
 
 @Global()
 @Module({
@@ -13,8 +13,12 @@ import { UserRepository } from './repository';
       provide: IUserRepository,
       useClass: UserRepository,
     },
+    {
+      provide: IConcertRepository,
+      useClass: ConcertRepository,
+    },
     PrismaService,
   ],
-  exports: [IUserRepository, PrismaService],
+  exports: [IUserRepository, IConcertRepository, PrismaService],
 })
 export class PrismaModule {}

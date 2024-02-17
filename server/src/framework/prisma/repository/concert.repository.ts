@@ -8,7 +8,7 @@ import { IConcertRepository } from '@src/core/repository';
 import { ConcertMapper } from '../mapper';
 
 @Injectable()
-export class UserRepository implements IConcertRepository {
+export class ConcertRepository implements IConcertRepository {
   constructor(private txHost: TransactionHost<TransactionalAdapterPrisma>) {}
 
   async create(concert: ConcertEntity): Promise<ConcertEntity> {
