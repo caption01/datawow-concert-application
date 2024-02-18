@@ -56,9 +56,9 @@ model Reservation {
 
 model ReservationAudit {
   id        Int     @id @default(autoincrement())
-  user      User    @relation(fields: [userId], references: [id])
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    Int
-  concert   Concert @relation(fields: [concertId], references: [id])
+  concert   Concert @relation(fields: [concertId], references: [id], onDelete: Cascade)
   concertId Int
   action    Action
 

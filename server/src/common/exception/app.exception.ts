@@ -35,6 +35,16 @@ export class AppException extends BaseException {
     );
   }
 
+  static cannotDeleteConcert(): AppException {
+    return new AppException(
+      {
+        error:
+          'concert have been reserved can not delete now, please remove all reservation to be able delete',
+      },
+      HttpStatus.BAD_REQUEST,
+    );
+  }
+
   static reservationNotFound(): AppException {
     return new AppException(
       { error: 'reservation not found' },
