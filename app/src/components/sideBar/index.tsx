@@ -2,6 +2,8 @@
 
 import { useContext } from "react";
 import { useRouter } from "next/navigation";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHome } from "@fortawesome/free-solid-svg-icons";
 
 import { UserContext } from "@/hooks";
 import { map } from "lodash";
@@ -19,7 +21,7 @@ const getSideBarMenuActions = (currentUser: any, sideBarMenu: any) => {
 
 export function SideBar() {
   const router = useRouter();
-  const { currentUser, onSelect, onSwitch } = useContext(UserContext);
+  const { currentUser, onSelect, onSwitch, onLogout } = useContext(UserContext);
 
   const goTo = (route: string) => {
     router.push(route);
@@ -129,6 +131,7 @@ export function SideBar() {
               className=""
               onClick={() => action?.onClick()}
             >
+              <FontAwesomeIcon icon={faHome} />
               {action?.title}
             </div>
           );
@@ -139,6 +142,7 @@ export function SideBar() {
           className=""
           onClick={() => {
             goTo("/");
+            onLogout();
           }}
         >
           Logout

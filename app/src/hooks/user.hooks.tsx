@@ -12,6 +12,7 @@ type UserContextApp = {
   currentUser: User | null;
   onSwitch: (currentUser: User) => void;
   onSelect: (role: string) => void;
+  onLogout: () => void;
 };
 
 const mockUsers = {
@@ -35,6 +36,7 @@ const UserContext = createContext<UserContextApp>({
   currentUser: null,
   onSwitch: () => {},
   onSelect: () => {},
+  onLogout: () => {},
 });
 
 const UserProvider = ({ children }: { children: any }) => {
@@ -50,10 +52,16 @@ const UserProvider = ({ children }: { children: any }) => {
 
   const onSelect = useCallback((selectedRole: string) => {
     if (selectedRole === "ADMIN") {
-      setUser(mockUsers.user);
-    } else {
       setUser(mockUsers.admin);
     }
+
+    if (selectedRole === "USER") {
+      setUser(mockUsers.user);
+    }
+  }, []);
+
+  const onLogout = useCallback(() => {
+    setUser(null);
   }, []);
 
   const value = useMemo(
@@ -61,8 +69,9 @@ const UserProvider = ({ children }: { children: any }) => {
       currentUser: user,
       onSwitch: onSwitch,
       onSelect: onSelect,
+      onLogout: onLogout,
     }),
-    [user, onSwitch, onSelect]
+    [user, onSwitch, onSelect, onLogout]
   );
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
