@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 
-import { ConcertMeta } from "@/components/concert/concertMeta";
+import { ConcertMeta, ConcertCard } from "@/components";
 
-import { Tabs } from "./components";
+import { Tabs, ConcertList } from "./components";
 
 export default function AdminDashboard() {
   const [tab, setTab] = useState("OVERVIEW");
@@ -18,6 +18,12 @@ export default function AdminDashboard() {
       </div>
       <div>
         <Tabs currentTab={tab} onTabSelect={setTab} />
+        <ConcertList show={tab === "OVERVIEW"}>
+          <ConcertCard />
+          <ConcertCard />
+          <ConcertCard />
+          <ConcertCard />
+        </ConcertList>
       </div>
     </main>
   );
