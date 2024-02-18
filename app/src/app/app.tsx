@@ -1,8 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { usePathname } from "next/navigation";
+import { ToastContainer } from "react-toastify";
+
 import { UserProvider } from "@/hooks";
 
 export function App({
@@ -10,5 +9,10 @@ export function App({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <UserProvider>{children}</UserProvider>;
+  return (
+    <UserProvider>
+      <div>{children}</div>
+      <ToastContainer autoClose={3000} />
+    </UserProvider>
+  );
 }
