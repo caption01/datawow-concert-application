@@ -1,6 +1,26 @@
 import { ConcertTable } from "@/components";
 import { map } from "lodash";
 
+function padTo2Digits(num: number) {
+  return num.toString().padStart(2, "0");
+}
+
+function formatDate(date: Date) {
+  return (
+    [
+      date.getFullYear(),
+      padTo2Digits(date.getMonth() + 1),
+      padTo2Digits(date.getDate()),
+    ].join("-") +
+    " " +
+    [
+      padTo2Digits(date.getHours()),
+      padTo2Digits(date.getMinutes()),
+      padTo2Digits(date.getSeconds()),
+    ].join(":")
+  );
+}
+
 export function ConcertHistoryTable({ history }: { history: any[] }) {
   const columns = [
     {
@@ -28,7 +48,7 @@ export function ConcertHistoryTable({ history }: { history: any[] }) {
   const dataSource = map(history, (item) => {
     return {
       key: item.id,
-      datetime: item.createdAt,
+      datetime: formatDate(new Date(item.createdAt)),
       username: item.fullname,
       concertName: item.concertName,
       action: item.action,
