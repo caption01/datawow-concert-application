@@ -18,7 +18,7 @@ export function ConcertCardDetail({
         <h3 className="text-[#1692EC] text-2xl border-b-[1px] border-zinc-400">
           {name}
         </h3>
-        <desc>{description}</desc>
+        <p>{description}</p>
         <section className="flex justify-between items-center">
           <div>
             <FontAwesomeIcon icon={faPerson} />

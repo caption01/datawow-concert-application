@@ -42,6 +42,7 @@ export function ConcertCardForm({
               className="border rounded p-2 text-gray-700 w-full"
               type="text"
               required
+              id="concertName"
               name="concertName"
               placeholder="Please input concert name"
             />
@@ -56,6 +57,7 @@ export function ConcertCardForm({
                 type="number"
                 min={1}
                 required
+                id="concertSeat"
                 name="concertSeat"
                 placeholder="Please input total of seat"
               />
@@ -74,6 +76,7 @@ export function ConcertCardForm({
             className="border rounded p-2 text-gray-700 w-full"
             type="text"
             required
+            id="concertDescription"
             name="concertDescription"
             placeholder="Please input description"
           />
