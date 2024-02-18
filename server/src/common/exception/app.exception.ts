@@ -28,6 +28,13 @@ export class AppException extends BaseException {
     );
   }
 
+  static concertWasReserve(): AppException {
+    return new AppException(
+      { error: 'you already reserve this concert' },
+      HttpStatus.BAD_REQUEST,
+    );
+  }
+
   static reservationNotFound(): AppException {
     return new AppException(
       { error: 'reservation not found' },

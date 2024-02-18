@@ -1,13 +1,16 @@
 import { Injectable } from '@nestjs/common';
+import { isEmpty } from 'lodash';
 
 import {
   IConcertRepository,
   IUserRepository,
   IReservationRepository,
+  IReservationAuditRepository,
 } from '@core/repository';
 
 import { ConcertEntity, ReservationEntity, UserEntity } from '@core/entity';
 import { AppException } from '@common/exception';
+import { Action } from '@prisma/client';
 
 const SEAT_ACTION = {
   ADD: 1,
@@ -20,6 +23,7 @@ export class ReserveUseCase {
     private concertRepo: IConcertRepository,
     private userRepo: IUserRepository,
     private reservationRepo: IReservationRepository,
+    private reservationAuditRepo: IReservationAuditRepository,
   ) {}
 
   async findConcert(concertId: number): Promise<ConcertEntity> {
@@ -34,6 +38,12 @@ export class ReserveUseCase {
     return this.reservationRepo.findById(reservationId);
   }
 
+  async canReservation(concertId: number, userId: number): Promise<boolean> {
+    const tx = await this.reservationRepo.getTx();
+    const reservations = await tx.findMany({ where: { userId, concertId } });
+    return isEmpty(reservations);
+  }
+
   async adJustSeat(concert: ConcertEntity, seat): Promise<void> {
     const tx = await this.concertRepo.getTx();
 
@@ -41,6 +51,10 @@ export class ReserveUseCase {
       where: { id: concert.id },
       data: { seat: concert.seat + seat },
     });
+  }
+
+  async createAudit(reservation: ReservationEntity, action: Action) {
+    return this.reservationAuditRepo.create(reservation, action);
   }
 
   async add(concertId: number, userId: number): Promise<ReservationEntity> {
@@ -51,7 +65,7 @@ export class ReserveUseCase {
     return this.reservationRepo.cancel(reservationId);
   }
 
-  async reserve(concertId: number, userId: number): Promise<void> {
+  async reserve(concertId: number, userId: number): Promise<ReservationEntity> {
     const user = await this.findUser(userId);
 
     if (!user) {
@@ -68,8 +82,15 @@ export class ReserveUseCase {
       throw AppException.concertFull();
     }
 
-    await this.add(concertId, userId);
+    if (!(await this.canReservation(concertId, userId))) {
+      throw AppException.concertWasReserve();
+    }
+
+    const reservation = await this.add(concertId, userId);
     await this.adJustSeat(concert, SEAT_ACTION.REMOVE);
+    await this.createAudit(reservation, Action.RESERVE);
+
+    return reservation;
   }
 
   async cancel(reservationId: number): Promise<void> {
@@ -83,5 +104,6 @@ export class ReserveUseCase {
 
     await this.remove(reservation.id);
     await this.adJustSeat(concert, SEAT_ACTION.ADD);
+    await this.createAudit(reservation, Action.CANCEL);
   }
 }

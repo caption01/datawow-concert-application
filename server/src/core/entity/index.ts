@@ -1,3 +1,4 @@
 export * from './user.entity';
 export * from './concert.entity';
-export * from './reservation.entiry';
+export * from './reservation.entity';
+export * from './reservation-audit.entity';

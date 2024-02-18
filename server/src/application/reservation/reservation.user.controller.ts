@@ -12,8 +12,9 @@ export class ReservationUserController {
   @Post()
   async book(@Body() bookDto: BookReservationDto) {
     const { concertId, userId } = bookDto;
-    await this.reserveUseCase.reserve(concertId, userId);
+    const reservation = await this.reserveUseCase.reserve(concertId, userId);
     return {
+      id: reservation.id,
       message: 'reserve concert success',
     };
   }
@@ -23,6 +24,7 @@ export class ReservationUserController {
   async cancel(@Param() param: CancelReservationDto) {
     await this.reserveUseCase.cancel(param.reservationId);
     return {
+      id: param.reservationId,
       message: 'cancel reservation success',
     };
   }

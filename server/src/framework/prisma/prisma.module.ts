@@ -4,6 +4,7 @@ import {
   IUserRepository,
   IConcertRepository,
   IReservationRepository,
+  IReservationAuditRepository,
 } from '@core/repository';
 
 import { PrismaService } from './prisma.service';
@@ -11,6 +12,7 @@ import {
   UserRepository,
   ConcertRepository,
   ReservationRepository,
+  ReservationAuditRepository,
 } from './repository';
 
 @Global()
@@ -29,12 +31,17 @@ import {
       provide: IReservationRepository,
       useClass: ReservationRepository,
     },
+    {
+      provide: IReservationAuditRepository,
+      useClass: ReservationAuditRepository,
+    },
     PrismaService,
   ],
   exports: [
     IUserRepository,
     IConcertRepository,
     IReservationRepository,
+    IReservationAuditRepository,
     PrismaService,
   ],
 })
