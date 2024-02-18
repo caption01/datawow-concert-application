@@ -13,4 +13,7 @@ export class ReservationAuditEntity {
   createdAt: Date;
   updatedAt?: Date;
   deletedAt?: Date;
+
+  fullname?: string;
+  concertName?: string;
 }

@@ -26,14 +26,45 @@ export class ReservationAuditRepository implements IReservationAuditRepository {
 
   async findAll(): Promise<ReservationAuditEntity[]> {
     const tx = await this.getTx();
-    const reservations = await tx.findMany();
-    return map(reservations, ReservationAuditMapper.toEntity);
+    const reservations = await tx.findMany({
+      select: {
+        id: true,
+        createdAt: true,
+        action: true,
+        user: { select: { firstname: true, lastname: true } },
+        concert: { select: { name: true } },
+      },
+    });
+
+    const reservationsWithExtraData = map(reservations, (item) => ({
+      ...item,
+      fullname: `${item?.user?.firstname} ${item?.user?.lastname}`,
+      concertName: `${item?.concert?.name}`,
+    }));
+
+    return map(reservationsWithExtraData, ReservationAuditMapper.toEntity);
   }
 
   async findAllOfUser(userId: number): Promise<ReservationAuditEntity[]> {
     const tx = await this.getTx();
-    const reservations = await tx.findMany({ where: { userId } });
-    return map(reservations, ReservationAuditMapper.toEntity);
+    const reservations = await tx.findMany({
+      where: { userId },
+      select: {
+        id: true,
+        createdAt: true,
+        action: true,
+        user: { select: { firstname: true, lastname: true } },
+        concert: { select: { name: true } },
+      },
+    });
+
+    const reservationsWithExtraData = map(reservations, (item) => ({
+      ...item,
+      fullname: `${item?.user?.firstname} ${item?.user?.lastname}`,
+      concertName: `${item?.concert?.name}`,
+    }));
+
+    return map(reservationsWithExtraData, ReservationAuditMapper.toEntity);
   }
 
   async create(reservation: ReservationEntity, action: Action): Promise<void> {

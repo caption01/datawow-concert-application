@@ -46,7 +46,7 @@ export class ReserveUseCase {
     const tx = await this.reservationRepo.getTx();
 
     const reservationCount = await tx.count({
-      where: { concertId: concert.createdById },
+      where: { concertId: concert.id },
     });
 
     return reservationCount < concert.seat;

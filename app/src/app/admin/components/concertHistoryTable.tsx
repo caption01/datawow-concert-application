@@ -1,6 +1,7 @@
 import { ConcertTable } from "@/components";
+import { map } from "lodash";
 
-export function ConcertHistoryTable() {
+export function ConcertHistoryTable({ history }: { history: any[] }) {
   const columns = [
     {
       key: "datetime",
@@ -24,36 +25,15 @@ export function ConcertHistoryTable() {
     },
   ];
 
-  const dataSource = [
-    {
-      key: "1",
-      datetime: new Date().toDateString(),
-      username: "mock user",
-      concertName: "Illslick",
-      action: "RESERVE",
-    },
-    {
-      key: "2",
-      datetime: new Date().toDateString(),
-      username: "mock user",
-      concertName: "Illslick",
-      action: "RESERVE",
-    },
-    {
-      key: "3",
-      datetime: new Date().toDateString(),
-      username: "mock user",
-      concertName: "Illslick",
-      action: "RESERVE",
-    },
-    {
-      key: "4",
-      datetime: new Date().toDateString(),
-      username: "mock user",
-      concertName: "Illslick",
-      action: "RESERVE",
-    },
-  ];
+  const dataSource = map(history, (item) => {
+    return {
+      key: item.id,
+      datetime: item.createdAt,
+      username: item.fullname,
+      concertName: item.concertName,
+      action: item.action,
+    };
+  });
 
   return <ConcertTable columns={columns} dataSource={dataSource} />;
 }
