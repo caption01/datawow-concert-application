@@ -33,7 +33,9 @@ export default function RootLayout({
             <div className="border-2">
               <SideBar />
             </div>
-            <div className="border-2 col-span-7">{children}</div>
+            <div className="border-2 col-span-7 overflow-y-auto">
+              {children}
+            </div>
           </div>
         </App>
       </body>
