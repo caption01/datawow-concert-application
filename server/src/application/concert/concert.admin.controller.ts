@@ -5,21 +5,33 @@ import {
   CreateConcertUseCase,
   ShowConcertsUseCase,
   DeleteConcertUseCase,
+  MetaDataConcert,
 } from '@src/use-case';
 import { CreateConcertDto, DeleteConcertDto } from '@src/core/dto';
 
-@Controller({ path: '/api/concerts' })
-export class ConcertController {
+@Controller({ path: '/api/admin/concerts' })
+export class ConcertAdminController {
   constructor(
     private showConcertsUseCase: ShowConcertsUseCase,
     private createConcertUseCase: CreateConcertUseCase,
     private deleteConcertUseCase: DeleteConcertUseCase,
+    private metaDataConcert: MetaDataConcert,
   ) {}
 
   @Transactional()
   @Get()
   async showConcerts(): Promise<any> {
     return this.showConcertsUseCase.getAllConcerts();
+  }
+
+  @Transactional()
+  @Get('/meta')
+  async getConcertMetaData(): Promise<{
+    totalSeat: number;
+    totalReserve: number;
+    totalCancel: number;
+  }> {
+    return this.metaDataConcert.getMetaData();
   }
 
   @Transactional()

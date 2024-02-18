@@ -8,7 +8,7 @@ import { AppController } from '@src/app.controller';
 import { AppConfigModule, AppConfigService } from '@common/index';
 import { PrismaModule, PrismaService } from '@framework/index';
 
-import { ConcertModule } from '@application/index';
+import { ConcertModule, ReservationModule } from '@application/index';
 
 @Module({
   imports: [
@@ -27,6 +27,7 @@ import { ConcertModule } from '@application/index';
     }),
     AppConfigModule,
     ConcertModule,
+    ReservationModule,
   ],
   providers: [AppConfigService],
   controllers: [AppController],

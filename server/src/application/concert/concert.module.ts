@@ -4,15 +4,21 @@ import {
   CreateConcertUseCase,
   ShowConcertsUseCase,
   DeleteConcertUseCase,
+  MetaDataConcert,
 } from '@use-case/index';
 
-import { ConcertController } from './concert.controller';
+import { ConcertAdminController } from './concert.admin.controller';
 
 @Global()
 @Module({
   imports: [],
-  providers: [ShowConcertsUseCase, CreateConcertUseCase, DeleteConcertUseCase],
-  controllers: [ConcertController],
+  providers: [
+    ShowConcertsUseCase,
+    CreateConcertUseCase,
+    DeleteConcertUseCase,
+    MetaDataConcert,
+  ],
+  controllers: [ConcertAdminController],
   exports: [],
 })
 export class ConcertModule {}
