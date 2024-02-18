@@ -11,6 +11,10 @@ export default function AdminDashboard() {
   const [tab, setTab] = useState("OVERVIEW");
   const meta = useConcertMeta();
 
+  const refreshMeta = () => {
+    meta.fetch();
+  };
+
   useEffect(() => {
     meta.fetch();
   }, []);
@@ -33,7 +37,7 @@ export default function AdminDashboard() {
       <div>
         <Tabs currentTab={tab} onTabSelect={setTab} />
         {tab === "OVERVIEW" && <ConcertList />}
-        {tab === "CREATE" && <ConcertForm />}
+        {tab === "CREATE" && <ConcertForm afterCreated={refreshMeta} />}
       </div>
     </main>
   );

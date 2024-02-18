@@ -1,9 +1,22 @@
 import axios from "axios";
+import { map } from "lodash";
 
 const customAxios = axios.create({
   baseURL: "http://localhost:3010/api",
   timeout: 5000,
 });
+
+const getUsefulErrorMessage = (errorResponseData: any) => {
+  const title = errorResponseData?.error || "Bad Request";
+  const messages = map(errorResponseData?.message, (_message) => {
+    const { property, message } = _message;
+    return `error [${property}- ${message}]`;
+  });
+
+  const usefulMsg = [title, ...messages].join(",\n");
+
+  return usefulMsg;
+};
 
 // request interceptors
 customAxios.interceptors.request.use(
@@ -21,8 +34,10 @@ customAxios.interceptors.response.use(
     return response;
   },
   function (error) {
-    const errMsg = error?.response?.data?.error;
-    return Promise.reject({ ...error, errorMsg: errMsg });
+    const errorResponseData = error?.response?.data;
+    const usefulError = getUsefulErrorMessage(errorResponseData);
+
+    return Promise.reject({ ...error, errorMsg: usefulError });
   }
 );
 
