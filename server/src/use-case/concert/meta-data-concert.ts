@@ -1,6 +1,10 @@
 import { Injectable } from '@nestjs/common';
+import { Action } from '@prisma/client';
 
-import { IConcertRepository } from '@src/core/repository';
+import {
+  IConcertRepository,
+  IReservationAuditRepository,
+} from '@src/core/repository';
 
 type MetaData = {
   totalSeat: number;
@@ -10,7 +14,10 @@ type MetaData = {
 
 @Injectable()
 export class MetaDataConcert {
-  constructor(private concertRepo: IConcertRepository) {}
+  constructor(
+    private concertRepo: IConcertRepository,
+    private reservationAuditRepo: IReservationAuditRepository,
+  ) {}
 
   async countConcertSeat(): Promise<number> {
     const tx = await this.concertRepo.getTx();
@@ -24,8 +31,35 @@ export class MetaDataConcert {
     return aggregations._sum.seat;
   }
 
-  async countTotalReserve(): Promise<number> {
-    return 0;
+  async countReservations(): Promise<{
+    totalReserve: number;
+    totalCancel: number;
+  }> {
+    const tx = await this.reservationAuditRepo.getTx();
+    const reservationAuditCount = await tx.groupBy({
+      by: ['action'],
+      _count: { id: true },
+    });
+
+    let reserveCount = 0;
+    let cancelCount = 0;
+
+    for (const audit of reservationAuditCount) {
+      const { action, _count } = audit;
+
+      if (action === Action.RESERVE) {
+        reserveCount = _count.id;
+      }
+
+      if (action === Action.CANCEL) {
+        cancelCount = _count.id;
+      }
+    }
+
+    return {
+      totalReserve: reserveCount,
+      totalCancel: cancelCount,
+    };
   }
 
   async countTotalCancel(): Promise<number> {
@@ -34,13 +68,12 @@ export class MetaDataConcert {
 
   async getMetaData(): Promise<MetaData> {
     const totalSeat = await this.countConcertSeat();
-    const totalReserve = await this.countTotalReserve();
-    const totalCancel = await this.countTotalCancel();
+    const totalReservations = await this.countReservations();
 
     return {
       totalSeat: totalSeat,
-      totalReserve: totalReserve,
-      totalCancel: totalCancel,
+      totalReserve: totalReservations.totalReserve,
+      totalCancel: totalReservations.totalCancel,
     };
   }
 }
