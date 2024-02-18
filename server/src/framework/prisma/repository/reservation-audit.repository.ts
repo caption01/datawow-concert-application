@@ -30,6 +30,12 @@ export class ReservationAuditRepository implements IReservationAuditRepository {
     return map(reservations, ReservationAuditMapper.toEntity);
   }
 
+  async findAllOfUser(userId: number): Promise<ReservationAuditEntity[]> {
+    const tx = await this.getTx();
+    const reservations = await tx.findMany({ where: { userId } });
+    return map(reservations, ReservationAuditMapper.toEntity);
+  }
+
   async create(reservation: ReservationEntity, action: Action): Promise<void> {
     const tx = await this.getTx();
     await tx.create({

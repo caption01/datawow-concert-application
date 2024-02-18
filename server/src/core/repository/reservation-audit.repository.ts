@@ -11,6 +11,8 @@ export abstract class IReservationAuditRepository {
 
   abstract findAll(): Promise<ReservationAuditEntity[]>;
 
+  abstract findAllOfUser(userId: number): Promise<ReservationAuditEntity[]>;
+
   abstract create(
     reservation: ReservationEntity,
     action: Action,

@@ -1,12 +1,36 @@
-import { Controller, Post, Delete, Body, Param } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Delete,
+  Body,
+  Param,
+  Get,
+  Query,
+} from '@nestjs/common';
 import { Transactional } from '@nestjs-cls/transactional';
 
-import { ReserveUseCase } from '@src/use-case';
-import { BookReservationDto, CancelReservationDto } from '@core/dto';
+import { ReserveUseCase, HistoryReservationUseCase } from '@src/use-case';
+import {
+  BookReservationDto,
+  CancelReservationDto,
+  UserHistoryDto,
+} from '@core/dto';
 
 @Controller({ path: '/api/user/reservations' })
 export class ReservationUserController {
-  constructor(private reserveUseCase: ReserveUseCase) {}
+  constructor(
+    private reserveUseCase: ReserveUseCase,
+    private historyReservationUseCase: HistoryReservationUseCase,
+  ) {}
+
+  @Transactional()
+  @Get()
+  async history(@Query() query: UserHistoryDto) {
+    const { userId } = query;
+    const reservation =
+      await this.historyReservationUseCase.getUserHistory(userId);
+    return reservation;
+  }
 
   @Transactional()
   @Post()
