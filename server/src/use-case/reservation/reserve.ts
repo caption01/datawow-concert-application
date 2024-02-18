@@ -12,11 +12,6 @@ import { ConcertEntity, ReservationEntity, UserEntity } from '@core/entity';
 import { AppException } from '@common/exception';
 import { Action } from '@prisma/client';
 
-const SEAT_ACTION = {
-  ADD: 1,
-  REMOVE: -1,
-};
-
 @Injectable()
 export class ReserveUseCase {
   constructor(
@@ -38,19 +33,23 @@ export class ReserveUseCase {
     return this.reservationRepo.findById(reservationId);
   }
 
-  async canReservation(concertId: number, userId: number): Promise<boolean> {
+  async isUserReserveConcert(
+    concertId: number,
+    userId: number,
+  ): Promise<boolean> {
     const tx = await this.reservationRepo.getTx();
     const reservations = await tx.findMany({ where: { userId, concertId } });
     return isEmpty(reservations);
   }
 
-  async adJustSeat(concert: ConcertEntity, seat): Promise<void> {
-    const tx = await this.concertRepo.getTx();
+  async isSeatAvailable(concert: ConcertEntity): Promise<boolean> {
+    const tx = await this.reservationRepo.getTx();
 
-    await tx.update({
-      where: { id: concert.id },
-      data: { seat: concert.seat + seat },
+    const reservationCount = await tx.count({
+      where: { concertId: concert.createdById },
     });
+
+    return reservationCount < concert.seat;
   }
 
   async createAudit(reservation: ReservationEntity, action: Action) {
@@ -78,16 +77,15 @@ export class ReserveUseCase {
       throw AppException.concertNotFound();
     }
 
-    if (concert.seat < 1) {
+    if (!(await this.isSeatAvailable(concert))) {
       throw AppException.concertFull();
     }
 
-    if (!(await this.canReservation(concertId, userId))) {
+    if (!(await this.isUserReserveConcert(concertId, userId))) {
       throw AppException.concertWasReserve();
     }
 
     const reservation = await this.add(concertId, userId);
-    await this.adJustSeat(concert, SEAT_ACTION.REMOVE);
     await this.createAudit(reservation, Action.RESERVE);
 
     return reservation;
@@ -100,10 +98,7 @@ export class ReserveUseCase {
       throw AppException.reservationNotFound();
     }
 
-    const concert = await this.findConcert(reservation.concertId);
-
     await this.remove(reservation.id);
-    await this.adJustSeat(concert, SEAT_ACTION.ADD);
     await this.createAudit(reservation, Action.CANCEL);
   }
 }
