@@ -1,21 +1,29 @@
-import { Controller, Post } from '@nestjs/common';
+import { Controller, Post, Delete, Body, Param } from '@nestjs/common';
 import { Transactional } from '@nestjs-cls/transactional';
 
-import {} from '@src/use-case';
+import { ReserveUseCase } from '@src/use-case';
+import { BookReservationDto, CancelReservationDto } from '@core/dto';
 
 @Controller({ path: '/api/user/reservations' })
 export class ReservationUserController {
-  constructor() {}
+  constructor(private reserveUseCase: ReserveUseCase) {}
 
   @Transactional()
   @Post()
-  async book(): Promise<any> {
-    return {};
+  async book(@Body() bookDto: BookReservationDto) {
+    const { concertId, userId } = bookDto;
+    await this.reserveUseCase.reserve(concertId, userId);
+    return {
+      message: 'reserve concert success',
+    };
   }
 
   @Transactional()
-  @Post()
-  async cancel(): Promise<any> {
-    return {};
+  @Delete(':reservationId')
+  async cancel(@Param() param: CancelReservationDto) {
+    await this.reserveUseCase.cancel(param.reservationId);
+    return {
+      message: 'cancel reservation success',
+    };
   }
 }

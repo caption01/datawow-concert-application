@@ -18,6 +18,12 @@ export class ReservationRepository implements IReservationRepository {
     return tx;
   }
 
+  async findById(id: number): Promise<ReservationEntity> {
+    const tx = await this.getTx();
+    const reservations = await tx.findFirst({ where: { id } });
+    return ReservationMapper.toEntity(reservations);
+  }
+
   async findAll(): Promise<ReservationEntity[]> {
     const tx = await this.getTx();
     const reservations = await tx.findMany();

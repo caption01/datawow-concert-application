@@ -20,4 +20,18 @@ export class AppException extends BaseException {
       HttpStatus.NOT_FOUND,
     );
   }
+
+  static concertFull(): AppException {
+    return new AppException(
+      { error: 'concert seat is not available' },
+      HttpStatus.BAD_REQUEST,
+    );
+  }
+
+  static reservationNotFound(): AppException {
+    return new AppException(
+      { error: 'reservation not found' },
+      HttpStatus.NOT_FOUND,
+    );
+  }
 }
