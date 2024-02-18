@@ -21,7 +21,8 @@ customAxios.interceptors.response.use(
     return response;
   },
   function (error) {
-    return Promise.reject(error);
+    const errMsg = error?.response?.data?.error;
+    return Promise.reject({ ...error, errorMsg: errMsg });
   }
 );
 

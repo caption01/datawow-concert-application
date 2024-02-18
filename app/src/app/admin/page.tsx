@@ -16,7 +16,7 @@ export default function AdminDashboard() {
   }, []);
 
   return (
-    <main className="mx-auto max-w-[1200px]">
+    <main className="mx-auto max-w-[1200px] px-8">
       <div className="grid grid-cols-3 gap-4 my-8 justify-around">
         <ConcertMeta
           bgColor="sky"
