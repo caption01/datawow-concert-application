@@ -15,9 +15,7 @@ export function ConcertMeta({
   count = 0,
 }) {
   return (
-    <div
-      className={`${bgColorVariants[bgColor]} w-full max-w-80 p-4 text-white`}
-    >
+    <div className={`${bgColorVariants[bgColor]} w-full p-4 text-white`}>
       <div className="flex flex-col text-center">
         <div>
           <FontAwesomeIcon icon={icon} />

@@ -1,20 +1,34 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { ConcertMeta } from "@/components";
 
 import { Tabs, ConcertList, ConcertForm } from "./components";
+import { useConcertMeta } from "./hooks";
 
 export default function AdminDashboard() {
   const [tab, setTab] = useState("OVERVIEW");
+  const meta = useConcertMeta();
+
+  useEffect(() => {
+    meta.fetch();
+  }, []);
 
   return (
-    <main className="m-8">
-      <div className="grid grid-cols-3 gap-4 justify-between my-8">
-        <ConcertMeta bgColor="sky" />
-        <ConcertMeta bgColor="green" />
-        <ConcertMeta bgColor="rose" />
+    <main className="mx-auto max-w-[1200px]">
+      <div className="grid grid-cols-3 gap-4 my-8 justify-around">
+        <ConcertMeta
+          bgColor="sky"
+          title="Total of seats"
+          count={meta?.data?.seat}
+        />
+        <ConcertMeta
+          bgColor="green"
+          title="Reserve"
+          count={meta?.data?.reserve}
+        />
+        <ConcertMeta bgColor="rose" title="Cancel" count={meta?.data?.cancel} />
       </div>
       <div>
         <Tabs currentTab={tab} onTabSelect={setTab} />
