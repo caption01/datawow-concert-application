@@ -1,13 +1,12 @@
-export function ConcertList({
-  show,
-  children,
-}: {
-  show: boolean;
-  children: React.ReactNode;
-}) {
+import { ConcertCardDetail } from "./concertCardDetail";
+
+export function ConcertList() {
   return (
     <section className="flex flex-col gap-4 mt-8 items-center">
-      {show && children}
+      <ConcertCardDetail />
+      <ConcertCardDetail />
+      <ConcertCardDetail />
+      <ConcertCardDetail />
     </section>
   );
 }
