@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { map } from "lodash";
 import { toast } from "react-toastify";
 
-import { ConcertCardDetail } from "./concertCardDetail";
+import { ConcertCardDetail } from "@/components";
 
 import { useConcerts } from "../hooks";
 
@@ -33,7 +33,7 @@ export function ConcertList() {
               name={concert.name}
               seat={concert.seat}
               description={concert.description}
-              onDelete={() => onDelete(concert.id)}
+              onClick={() => onDelete(concert.id)}
             />
           </div>
         );
