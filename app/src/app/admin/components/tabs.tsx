@@ -1,4 +1,4 @@
-const activeTabVariants = "border-black border-b-4";
+const activeTabVariants = "text-[#1692EC] border-[#1692EC] border-b-2";
 
 export function Tabs({
   currentTab,
@@ -12,7 +12,7 @@ export function Tabs({
   };
 
   return (
-    <section className="flex gap-4">
+    <section className="flex gap-4 ">
       <div
         className={`${currentTab === "OVERVIEW" && activeTabVariants} px-2`}
         onClick={() => onSelect("OVERVIEW")}

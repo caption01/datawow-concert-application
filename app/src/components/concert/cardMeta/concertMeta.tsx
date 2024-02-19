@@ -9,15 +9,15 @@ const bgColorVariants: Record<string, string> = {
 
 export function ConcertMeta({
   bgColor = "sky",
-  icon = faPerson,
+  icon = "human",
   title = "title",
   count = 0,
 }) {
   return (
     <div className={`${bgColorVariants[bgColor]} w-full p-4 text-white`}>
-      <div className="flex flex-col text-center">
+      <div className="flex flex-col text-center gap-4">
         <div>
-          <Icons i="human" size={40} />
+          <Icons i={icon} size={40} />
         </div>
         <div className="text-xl">{title}</div>
         <div className="text-4xl">{count}</div>

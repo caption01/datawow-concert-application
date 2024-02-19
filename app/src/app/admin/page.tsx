@@ -21,18 +21,25 @@ export default function AdminDashboard() {
 
   return (
     <main className="mx-auto max-w-[1200px] px-8">
-      <div className="grid grid-cols-3 gap-4 my-8 justify-around">
+      <div className="grid grid-cols-3 gap-8 my-8 justify-around">
         <ConcertMeta
           bgColor="sky"
           title="Total of seats"
+          icon="human"
           count={meta?.data?.seat}
         />
         <ConcertMeta
           bgColor="green"
           title="Reserve"
+          icon="award"
           count={meta?.data?.reserve}
         />
-        <ConcertMeta bgColor="rose" title="Cancel" count={meta?.data?.cancel} />
+        <ConcertMeta
+          bgColor="rose"
+          title="Cancel"
+          icon="xCircle"
+          count={meta?.data?.cancel}
+        />
       </div>
       <div>
         <Tabs currentTab={tab} onTabSelect={setTab} />
