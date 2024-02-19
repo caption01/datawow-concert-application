@@ -1,5 +1,4 @@
-import Icons from "@/components/icons";
-
+import { Icons } from "@/components";
 import { faPerson } from "@fortawesome/free-solid-svg-icons";
 
 const bgColorVariants: Record<string, string> = {

@@ -33,4 +33,4 @@ const Icons = ({ i = "human", ...rest }: IProps) => {
   return <ISvg className="inline-block" {...rest} />;
 };
 
-export default Icons;
+export { Icons };

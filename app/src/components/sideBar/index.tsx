@@ -2,10 +2,11 @@
 
 import { useContext } from "react";
 import { useRouter } from "next/navigation";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHome } from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faHome } from "@fortawesome/free-solid-svg-icons";
 
 import { UserContext } from "@/hooks";
+import { Icons } from "@/components";
 import { map } from "lodash";
 
 const getSideBarMenuActions = (currentUser: any, sideBarMenu: any) => {
@@ -47,6 +48,7 @@ export function SideBar() {
     {
       id: "default-1",
       title: "Select Admin",
+      icon: "refresh",
       onClick: () => {
         onSelectRole("ADMIN");
         goTo("/admin");
@@ -55,6 +57,7 @@ export function SideBar() {
     {
       id: "default-2",
       title: "Select User",
+      icon: "refresh",
       onClick: () => {
         onSelectRole("USER");
         goTo("/user");
@@ -66,6 +69,7 @@ export function SideBar() {
     {
       id: "admin-1",
       title: "Home",
+      icon: "home",
       onClick: () => {
         goTo("/admin");
       },
@@ -73,6 +77,7 @@ export function SideBar() {
     {
       id: "admin-2",
       title: "History",
+      icon: "inbox",
       onClick: () => {
         goTo("/admin/history");
       },
@@ -80,6 +85,7 @@ export function SideBar() {
     {
       id: "admin-3",
       title: "Switch to user",
+      icon: "refresh",
       onClick: () => {
         onSwitchUser();
       },
@@ -90,6 +96,7 @@ export function SideBar() {
     {
       id: "user-1",
       title: "Home",
+      icon: "home",
       onClick: () => {
         goTo("/user");
       },
@@ -97,12 +104,14 @@ export function SideBar() {
     {
       id: "user-2",
       title: "History",
+      icon: "inbox",
       onClick: () => {
         goTo("/user/history");
       },
     },
     {
       id: "user-3",
+      icon: "refresh",
       title: "Switch to admin",
       onClick: () => {
         onSwitchUser();
@@ -123,21 +132,28 @@ export function SideBar() {
   return (
     <div className="flex flex-col justify-between h-full">
       <div className="flex flex-col">
-        {SideBarTitle && <div className="">{SideBarTitle}</div>}
+        {SideBarTitle && (
+          <div className="my-8 text-4xl font-bold">{SideBarTitle}</div>
+        )}
         {map(sideBarMenuAction, (action) => {
           return (
             <div
               key={action?.id}
-              className=""
+              className="flex items-center hover:bg-blue-100 h-[64px]"
               onClick={() => action?.onClick()}
             >
-              <FontAwesomeIcon icon={faHome} />
+              <span className="pr-2">
+                {action?.icon && <Icons i={action?.icon} />}
+              </span>
               {action?.title}
             </div>
           );
         })}
       </div>
-      <div className="flex">
+      <div className="flex items-center hover:bg-blue-200 h-[64px]">
+        <span className="pr-2">
+          <Icons i={"logout"} />
+        </span>
         <div
           className=""
           onClick={() => {
