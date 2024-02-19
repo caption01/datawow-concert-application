@@ -1,7 +1,4 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPerson, faTrash } from "@fortawesome/free-solid-svg-icons";
-
-import { ConcertCard } from "@/components";
+import { ConcertCard, Icons } from "@/components";
 
 export function ConcertCardForm({
   onSubmit,
@@ -29,7 +26,11 @@ export function ConcertCardForm({
 
   return (
     <ConcertCard>
-      <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+      <form
+        id="formConcert"
+        className="flex flex-col gap-4"
+        onSubmit={handleSubmit}
+      >
         <h3 className="text-[#1692EC] text-2xl border-b-[1px] border-zinc-400">
           Create
         </h3>
@@ -61,10 +62,9 @@ export function ConcertCardForm({
                 name="concertSeat"
                 placeholder="Please input total of seat"
               />
-              <FontAwesomeIcon
-                className="absolute inset-y-[50%] right-[12px] translate-y-[-50%]"
-                icon={faPerson}
-              />
+              <div className="absolute inset-y-[25%] right-[12px]">
+                <Icons i="human" size={16} fill={"black"} />
+              </div>
             </div>
           </div>
         </div>
@@ -81,9 +81,15 @@ export function ConcertCardForm({
             placeholder="Please input description"
           />
         </div>
-        <div className="self-end">
-          <input type="submit" />
-        </div>
+        <button
+          type="submit"
+          form="formConcert"
+          value="Submit"
+          className="self-end bg-[#1692EC] text-base text-white px-4 py-2 cursor-pointer"
+        >
+          <Icons i="save" />
+          Submit
+        </button>
       </form>
     </ConcertCard>
   );

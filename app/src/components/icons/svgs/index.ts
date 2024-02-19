@@ -6,3 +6,4 @@ export * from "./logout";
 export * from "./refresh";
 export * from "./trash";
 export * from "./x-circle";
+export * from "./save";

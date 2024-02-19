@@ -7,6 +7,7 @@ import {
   RefreshSvg,
   TrashSvg,
   XCircleSvg,
+  SaveSvg,
 } from "./svgs";
 
 const I = {
@@ -18,6 +19,7 @@ const I = {
   refresh: RefreshSvg,
   trash: TrashSvg,
   xCircle: XCircleSvg,
+  save: SaveSvg,
 };
 
 type IProps = {
