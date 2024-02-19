@@ -38,6 +38,7 @@ export class ShowUserConcertsUseCase {
       return {
         ...concert,
         isReserved: !!userMapReservations[concert.id],
+        reservationId: userMapReservations[concert.id]?.id || null,
       };
     });
   }
