@@ -1,7 +1,4 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPerson, faTrash } from "@fortawesome/free-solid-svg-icons";
-
-import { ConcertCard } from "@/components";
+import { ConcertCard, Icons } from "@/components";
 
 const mockDesc =
   "Lorem ipsum dolor sit amet consectetur. Elit purus nam gravida porttitor nibh urna sit ornare a. Proin dolor morbi id ornare aenean non. Fusce dignissim turpis sed non est orci sed in. Blandit ut purus nunc sed donec commodo morbi diam scelerisque.";
@@ -9,7 +6,7 @@ const mockDesc =
 const ACTIONS: Record<string, any> = {
   DELETE: {
     title: "Delete",
-    icon: faTrash,
+    icon: "trash",
   },
   CANCEL: {
     title: "Cancel",
@@ -42,16 +39,14 @@ export function ConcertCardDetail({
         <p>{description}</p>
         <section className="flex justify-between items-center">
           <div>
-            <FontAwesomeIcon icon={faPerson} />
+            {actionProps.icon && <Icons i={"human"} size={18} fill="black" />}
             <span className="ml-2">{seat}</span>
           </div>
           <button
             className="bg-[#E84E4E] text-white p-2 w-[120px]"
             onClick={onClick}
           >
-            {actionProps.icon && (
-              <FontAwesomeIcon className="pr-2" icon={faTrash} />
-            )}
+            {actionProps.icon && <Icons i={actionProps.icon} />}
             {actionProps.title && <span>{actionProps.title}</span>}
           </button>
         </section>

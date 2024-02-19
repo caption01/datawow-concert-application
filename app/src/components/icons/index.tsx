@@ -22,6 +22,7 @@ const I = {
 
 type IProps = {
   i: keyof typeof I;
+  fill?: string;
   size?: number;
 };
 
