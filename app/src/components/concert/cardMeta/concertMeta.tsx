@@ -1,4 +1,4 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Icons from "@/components/icons";
 
 import { faPerson } from "@fortawesome/free-solid-svg-icons";
 
@@ -18,7 +18,7 @@ export function ConcertMeta({
     <div className={`${bgColorVariants[bgColor]} w-full p-4 text-white`}>
       <div className="flex flex-col text-center">
         <div>
-          <FontAwesomeIcon icon={icon} />
+          <Icons i="human" size={40} />
         </div>
         <div className="text-xl">{title}</div>
         <div className="text-4xl">{count}</div>
