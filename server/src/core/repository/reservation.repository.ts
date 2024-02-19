@@ -9,6 +9,8 @@ export abstract class IReservationRepository {
 
   abstract findAll(): Promise<ReservationEntity[]>;
 
+  abstract findAllInUser(userId: number): Promise<ReservationEntity[]>;
+
   abstract book(concertId: number, userId: number): Promise<ReservationEntity>;
 
   abstract cancel(reservationId: number): Promise<ReservationEntity>;

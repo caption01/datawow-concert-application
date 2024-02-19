@@ -42,7 +42,9 @@ export class ReservationAuditRepository implements IReservationAuditRepository {
       concertName: `${item?.concert?.name}`,
     }));
 
-    return map(reservationsWithExtraData, ReservationAuditMapper.toEntity);
+    return map(reservationsWithExtraData, (d: any) =>
+      ReservationAuditMapper.toEntity(d),
+    );
   }
 
   async findAllOfUser(userId: number): Promise<ReservationAuditEntity[]> {
@@ -64,7 +66,9 @@ export class ReservationAuditRepository implements IReservationAuditRepository {
       concertName: `${item?.concert?.name}`,
     }));
 
-    return map(reservationsWithExtraData, ReservationAuditMapper.toEntity);
+    return map(reservationsWithExtraData, (d: any) =>
+      ReservationAuditMapper.toEntity(d),
+    );
   }
 
   async create(reservation: ReservationEntity, action: Action): Promise<void> {
