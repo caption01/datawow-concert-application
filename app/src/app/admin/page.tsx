@@ -21,7 +21,7 @@ export default function AdminDashboard() {
 
   return (
     <main className="mx-auto max-w-[1200px] px-8">
-      <div className="grid grid-cols-3 gap-8 my-8 justify-around">
+      <div className="grid grid-cols-3 gap-8 my-8 justify-around sm:grid-rows-1 sm:grid-cols-none">
         <ConcertMeta
           bgColor="sky"
           title="Total of seats"
