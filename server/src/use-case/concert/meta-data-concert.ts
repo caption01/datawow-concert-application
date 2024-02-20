@@ -28,7 +28,7 @@ export class MetaDataConcert {
       },
     });
 
-    return aggregations._sum.seat;
+    return aggregations._sum.seat || 0;
   }
 
   async countReservations(): Promise<{
