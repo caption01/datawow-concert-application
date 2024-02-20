@@ -133,7 +133,7 @@ export function SideBar() {
     <div className="flex flex-col justify-between h-full">
       <div className="flex flex-col">
         {SideBarTitle && (
-          <div className="my-8 text-4xl font-bold">{SideBarTitle}</div>
+          <div className="text-4xl my-8 p-2 font-bold">{SideBarTitle}</div>
         )}
         {map(sideBarMenuAction, (action) => {
           return (
