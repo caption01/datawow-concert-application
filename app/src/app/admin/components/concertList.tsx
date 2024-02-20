@@ -8,7 +8,7 @@ import { ConcertCardDetail } from "@/components";
 
 import { useConcerts } from "../hooks";
 
-export function ConcertList() {
+export function ConcertList({ metaRefresh }: { metaRefresh: () => void }) {
   const concerts = useConcerts();
 
   const concertLists = concerts.data;
@@ -19,7 +19,10 @@ export function ConcertList() {
 
   const onDelete = async (concertId: number) => {
     await concerts.remove(concertId, {
-      onSuccess: () => toast("deleted success"),
+      onSuccess: () => {
+        toast("deleted success");
+        metaRefresh();
+      },
       onError: (msg: any) => toast(msg),
     });
   };

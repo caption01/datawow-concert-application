@@ -43,8 +43,8 @@ export default function AdminDashboard() {
       </div>
       <div>
         <Tabs currentTab={tab} onTabSelect={setTab} />
-        {tab === "OVERVIEW" && <ConcertList />}
-        {tab === "CREATE" && <ConcertForm afterCreated={refreshMeta} />}
+        {tab === "OVERVIEW" && <ConcertList metaRefresh={refreshMeta} />}
+        {tab === "CREATE" && <ConcertForm metaRefresh={refreshMeta} />}
       </div>
     </main>
   );

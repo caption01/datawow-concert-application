@@ -8,7 +8,7 @@ import { UserContext } from "@/hooks";
 import { ConcertCardForm } from "./concertCardForm";
 import { useConcerts } from "../hooks";
 
-export function ConcertForm({ afterCreated }: { afterCreated: () => void }) {
+export function ConcertForm({ metaRefresh }: { metaRefresh: () => void }) {
   const user = useContext(UserContext);
   const concert = useConcerts();
 
@@ -17,7 +17,7 @@ export function ConcertForm({ afterCreated }: { afterCreated: () => void }) {
     await concert.create(admin, formData, {
       onSuccess: () => {
         toast("create success");
-        afterCreated();
+        metaRefresh();
       },
       onError: (errorMsg: string) => {
         toast(errorMsg);
