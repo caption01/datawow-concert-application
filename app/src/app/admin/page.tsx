@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 
-import { ConcertMeta } from "@/components";
+import { ConcertMeta, Modal } from "@/components";
 
 import { Tabs, ConcertList, ConcertForm } from "./components";
 import { useConcertMeta } from "./hooks";
@@ -46,6 +46,7 @@ export default function AdminDashboard() {
         {tab === "OVERVIEW" && <ConcertList metaRefresh={refreshMeta} />}
         {tab === "CREATE" && <ConcertForm metaRefresh={refreshMeta} />}
       </div>
+      <Modal show={true} />
     </main>
   );
 }
