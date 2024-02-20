@@ -9,7 +9,7 @@ import { UserContext } from "@/hooks";
 import { Icons } from "@/components";
 import { map } from "lodash";
 
-const getSideBarMenuActions = (currentUser: any, sideBarMenu: any) => {
+const getSideBarMenuActions = (currentUser: any, sideBarMenu: any): any[] => {
   switch (currentUser?.role) {
     case "ADMIN":
       return sideBarMenu?.admin;
@@ -158,17 +158,20 @@ export function SideBar() {
 
   return (
     <div className="flex flex-col justify-between h-full md:flex-row">
-      <div className="flex flex-col md:w-full md:flex-row md:justify-around">
+      <div className="flex flex-col h-full md:w-full md:flex-row md:justify-around">
         {SideBarTitle && (
           <div className="text-4xl my-8 p-2 font-bold overflow-hidden md:hidden">
             {SideBarTitle}
           </div>
         )}
-        {map(sideBarMenuAction, (action) => {
+        {map(sideBarMenuAction, (action, idx) => {
+          const lastItem = idx === sideBarMenuAction?.length - 1;
           return (
             <div
               key={action?.id}
-              className="flex items-center hover:bg-blue-100 h-[64px] md:mx-2"
+              className={`flex items-center hover:bg-blue-100 h-[64px] md:mx-2 ${
+                lastItem && "mt-auto"
+              }`}
               onClick={() => action?.onClick()}
             >
               <span className="pr-2">
