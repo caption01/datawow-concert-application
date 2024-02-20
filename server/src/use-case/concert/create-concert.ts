@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { isEmpty } from 'lodash';
 
 import { IConcertRepository, IUserRepository } from '@src/core/repository';
 import { CreateConcertDto } from '@src/core/dto';
@@ -17,9 +18,9 @@ export class CreateConcertUseCase {
   }
 
   async create(concertDto: CreateConcertDto): Promise<ConcertEntity> {
-    const adminId = await this.findAdmin(concertDto.createdById);
+    const admin = await this.findAdmin(concertDto.createdById);
 
-    if (!adminId) {
+    if (isEmpty(admin)) {
       throw AppException.userNotFound();
     }
 
