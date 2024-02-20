@@ -63,6 +63,15 @@ export function SideBar() {
         goTo("/user");
       },
     },
+    {
+      id: "default-3",
+      title: "Log out",
+      icon: "logout",
+      onClick: () => {
+        goTo("/");
+        onLogout();
+      },
+    },
   ];
 
   const adminSideBarActions = [
@@ -88,6 +97,15 @@ export function SideBar() {
       icon: "refresh",
       onClick: () => {
         onSwitchUser();
+      },
+    },
+    {
+      id: "admin-4",
+      title: "Log out",
+      icon: "logout",
+      onClick: () => {
+        goTo("/");
+        onLogout();
       },
     },
   ];
@@ -117,6 +135,15 @@ export function SideBar() {
         onSwitchUser();
       },
     },
+    {
+      id: "user-4",
+      title: "Log out",
+      icon: "logout",
+      onClick: () => {
+        goTo("/");
+        onLogout();
+      },
+    },
   ];
 
   const sideBarMenu = {
@@ -130,16 +157,18 @@ export function SideBar() {
   const SideBarTitle = currentUser ? currentUser.role.toUpperCase() : null;
 
   return (
-    <div className="flex flex-col justify-between h-full">
-      <div className="flex flex-col">
+    <div className="flex flex-col justify-between h-full md:flex-row">
+      <div className="flex flex-col md:w-full md:flex-row md:justify-around">
         {SideBarTitle && (
-          <div className="text-4xl my-8 p-2 font-bold">{SideBarTitle}</div>
+          <div className="text-4xl my-8 p-2 font-bold overflow-hidden md:hidden">
+            {SideBarTitle}
+          </div>
         )}
         {map(sideBarMenuAction, (action) => {
           return (
             <div
               key={action?.id}
-              className="flex items-center hover:bg-blue-100 h-[64px]"
+              className="flex items-center hover:bg-blue-100 h-[64px] md:mx-2"
               onClick={() => action?.onClick()}
             >
               <span className="pr-2">
@@ -149,20 +178,6 @@ export function SideBar() {
             </div>
           );
         })}
-      </div>
-      <div className="flex items-center hover:bg-blue-200 h-[64px]">
-        <span className="pr-2">
-          <Icons i={"logout"} />
-        </span>
-        <div
-          className=""
-          onClick={() => {
-            goTo("/");
-            onLogout();
-          }}
-        >
-          Logout
-        </div>
       </div>
     </div>
   );

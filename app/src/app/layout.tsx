@@ -29,8 +29,8 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <App>
-          <div className="grid grid-flow-col grid-cols-8 h-screen">
-            <div className="border-2">
+          <div className="grid grid-cols-8 h-screen md:grid-rows md:grid-cols-none md:h-full">
+            <div className="border-2 col-span-1 md:border-0 md:col-span-7">
               <SideBar />
             </div>
             <div className="border-2 col-span-7 overflow-y-auto">
