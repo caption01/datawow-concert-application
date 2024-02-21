@@ -1,8 +1,12 @@
 import axios from "axios";
 import { map } from "lodash";
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3010";
+
+console.log({ API_URL });
+
 const customAxios = axios.create({
-  baseURL: "http://localhost:3010/api",
+  baseURL: `${API_URL}/api`,
   timeout: 5000,
 });
 
