@@ -169,12 +169,12 @@ export function SideBar() {
           return (
             <div
               key={action?.id}
-              className={`flex items-center hover:bg-blue-100 h-[64px] md:mx-2 ${
+              className={`flex items-center hover:bg-blue-100 h-[64px] md:px-2 md:grow ${
                 lastItem && "mt-auto"
               }`}
               onClick={() => action?.onClick()}
             >
-              <span className="pr-2">
+              <span className="pr-2 md:hidden">
                 {action?.icon && <Icons i={action?.icon} />}
               </span>
               {action?.title}
