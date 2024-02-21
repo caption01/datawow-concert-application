@@ -1,5 +1,7 @@
 ### Datawow assignment: Concert Reservation Application
 
+owner: nutchapon hanouypornlert
+
 ### Project structure
 
 ```
@@ -10,6 +12,17 @@ root
 │
 └── docker-compose-yaml (database & backend start up)
 ```
+
+in application already seeding with
+
+- 2 users
+
+  - admin
+  - john
+
+- 2 concerts
+  - bodyslam (1 seat)
+  - illslick (200 seat)
 
 ---
 

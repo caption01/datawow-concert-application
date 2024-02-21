@@ -15,25 +15,13 @@ const users = [
     lastname: 'ladhrin',
     role: Role.USER,
   },
-  {
-    username: 'michel',
-    firstname: 'michel',
-    lastname: 'doll',
-    role: Role.USER,
-  },
-  {
-    username: 'rolla',
-    firstname: 'rolla',
-    lastname: 'smith',
-    role: Role.USER,
-  },
 ];
 
 const concertsData = [
-  { name: 'bodyslam', seat: 2, description: 'private party' },
+  { name: 'bodyslam', seat: 1, description: 'private party' },
   {
     name: 'illslick',
-    seat: 500,
+    seat: 200,
     description: 'full concert of illslick tours',
   },
 ];
