@@ -39,7 +39,7 @@ export class ReserveUseCase {
   ): Promise<boolean> {
     const tx = await this.reservationRepo.getTx();
     const reservations = await tx.findMany({ where: { userId, concertId } });
-    return isEmpty(reservations);
+    return !isEmpty(reservations);
   }
 
   async isSeatAvailable(concert: ConcertEntity): Promise<boolean> {
@@ -67,13 +67,13 @@ export class ReserveUseCase {
   async reserve(concertId: number, userId: number): Promise<ReservationEntity> {
     const user = await this.findUser(userId);
 
-    if (!user) {
+    if (isEmpty(user)) {
       throw AppException.userNotFound();
     }
 
     const concert = await this.findConcert(concertId);
 
-    if (!concert) {
+    if (isEmpty(concert)) {
       throw AppException.concertNotFound();
     }
 
@@ -81,7 +81,7 @@ export class ReserveUseCase {
       throw AppException.concertFull();
     }
 
-    if (!(await this.isUserReserveConcert(concertId, userId))) {
+    if (await this.isUserReserveConcert(concertId, userId)) {
       throw AppException.concertWasReserve();
     }
 

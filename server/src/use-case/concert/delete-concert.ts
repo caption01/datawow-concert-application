@@ -30,7 +30,7 @@ export class DeleteConcertUseCase {
   async delete(concertId: number): Promise<ConcertEntity> {
     const concert = await this.findConcert(concertId);
 
-    if (!concert) {
+    if (isEmpty(concert)) {
       throw AppException.concertNotFound();
     }
 
