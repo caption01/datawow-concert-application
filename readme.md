@@ -34,6 +34,8 @@ in application already seeding with
 
 this server was implement following clean architecture which setup project structure following
 
+_FYI_ this project didn't implement soft delete yet so when you delete concert all reserve history that related to concert will be deleted.
+
 ```
 src
 ├── application (presentation)
