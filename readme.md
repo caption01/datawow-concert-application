@@ -166,3 +166,13 @@ at root directory
 ### 2.how to handle when many users want to reserve the ticket at the same time?
 
 1. i would like to add optimistic locking strategy into reservation flow to prevent in concurrency booking.
+
+### Live Demo (GIF)
+
+### Small Screen
+
+<img width="300" height="400" alt="sm-screen" src="./sm.gif" />
+
+### Medium - Large Screen
+
+<img width="800" height="500" alt="sm-screen" src="./tablet-desktop.gif" />
