@@ -78,15 +78,19 @@ tech stack
 
 #### start and run server
 
-1. create .env from env-example in server directory
+1. go to server directory
 
-`cd ./server && cat env-example > .env`
+`cd ./server`
 
-2. install dependency
+2. create .env from env-example in server directory
 
-`npm install`
+`cat env-example > .env`
 
-3. start database and server
+3. install dependency
+
+`yarn install`
+
+4. back to root dir and start docker-compose
 
 at root directory
 
@@ -95,6 +99,19 @@ at root directory
 4. check server is running
 
 `curl http://localhost:3010/api/health`
+
+5. run migration (for first time)
+
+- 5.1 exec sh to server container `docker compose exec server sh`
+- 5.2 exec prisma migrate `npx prisma migrate dev`
+- 5.3 run seed `npx prisma db seed`
+
+6. ready to go
+
+7. in case want to reset every thing in database (optional)
+
+- 7.1 exec sh to server container `docker compose exec server sh`
+- 7.2 exec prisma migrate `npx prisma migrate reset`
 
 #### start and run app
 
@@ -108,19 +125,25 @@ at root directory
 
 3. install dependency
 
-`npm install`
+`yarn install`
 
 4. run application
 
-`npm run dev`
+`yarn dev`
+
+5. ready to go (open http://localhost:3000)
 
 ---
 
 ### how to run test in server
 
-1. run jest tests
+1. go to server directory
 
-`npm run test`
+`cd ./server`
+
+2. run jest tests
+
+`yarn test`
 
 ---
 
